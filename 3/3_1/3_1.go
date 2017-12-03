@@ -7,6 +7,7 @@ import (
 	"math"
 	"os"
 	"strconv"
+	"../../utils/intutils"
 )
 
 func main() {
@@ -28,13 +29,13 @@ func main() {
 }
 
 func FindManhattanDistance(startX int, startY int, endX int, endY int) int {
-	distanceX := Abs(startX - endX)
-	distanceY := Abs(startY - endY)
+	distanceX := intutils.Abs(startX - endX)
+	distanceY := intutils.Abs(startY - endY)
 	return distanceX + distanceY
 }
 
 func FindSquare(n int) int {
-	return Ceil((math.Sqrt(float64(n)) + 1) / 2)
+	return intutils.Ceil((math.Sqrt(float64(n)) + 1) / 2)
 }
 
 func FindBoxSize(square int) int {
@@ -42,7 +43,7 @@ func FindBoxSize(square int) int {
 }
 
 func FindMaximum(square int) int {
-	return Pow(FindBoxSize(square), 2)
+	return intutils.Pow(FindBoxSize(square), 2)
 }
 
 func FindMinimum(square int) int {
@@ -76,46 +77,14 @@ func FindCoordinate(n int) (int, int) {
 
 	max_ := boxSize / 2
 
-	toAddY := Min(max_-startY, position)
-	position = Max(position-toAddY, 0)
-	toSubstractX := Min(boxSize-1, position)
-	position = Max(position-toSubstractX, 0)
-	toSubstractY := Min(boxSize-1, position)
-	position = Max(position-toSubstractY, 0)
-	toAddX := Min(boxSize-1, position)
-	position = Max(position-toAddX, position)
+	toAddY := intutils.Min(max_-startY, position)
+	position = intutils.Max(position-toAddY, 0)
+	toSubstractX := intutils.Min(boxSize-1, position)
+	position = intutils.Max(position-toSubstractX, 0)
+	toSubstractY := intutils.Min(boxSize-1, position)
+	position = intutils.Max(position-toSubstractY, 0)
+	toAddX := intutils.Min(boxSize-1, position)
+	position = intutils.Max(position-toAddX, position)
 
 	return startX - toSubstractX + toAddX, startY - toSubstractY + toAddY
-}
-
-func Min(a, b int) int {
-	if a < b {
-		return a
-	} else {
-		return b
-	}
-}
-
-func Max(a, b int) int {
-	if a > b {
-		return a
-	} else {
-		return b
-	}
-}
-
-func Abs(a int) int {
-	if a >= 0 {
-		return a
-	} else {
-		return -a
-	}
-}
-
-func Ceil(x float64) int {
-	return int(math.Ceil(x))
-}
-
-func Pow(x int, f int) int {
-	return int(math.Pow(float64(x), float64(f)))
 }

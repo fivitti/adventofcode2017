@@ -7,6 +7,7 @@ import (
 	"fmt"
 	"os"
 	"strconv"
+	"../../utils/intutils"
 )
 
 const matrixSize = 10000
@@ -92,8 +93,8 @@ func genMatrix(stopCond func(int) bool) (int, error) {
 
 		for x >= -halfBoxSize && x <= halfBoxSize && y >= -halfBoxSize && y <= halfBoxSize {
 			neightbourValue := 0
-			for idxX := Max(x-1, -halfBoxSize); idxX <= Min(x+1, halfBoxSize); idxX++ {
-				for idxY := Max(y-1, -halfBoxSize); idxY <= Min(y+1, halfBoxSize); idxY++ {
+			for idxX := intutils.Max(x-1, -halfBoxSize); idxX <= intutils.Min(x+1, halfBoxSize); idxX++ {
+				for idxY := intutils.Max(y-1, -halfBoxSize); idxY <= intutils.Min(y+1, halfBoxSize); idxY++ {
 					if idxX == x && idxY == y {
 						continue
 					}
@@ -118,18 +119,4 @@ func genMatrix(stopCond func(int) bool) (int, error) {
 	return get(matrixSize/2-1, -matrixSize/2-1), nil
 }
 
-func Min(a, b int) int {
-	if a < b {
-		return a
-	} else {
-		return b
-	}
-}
 
-func Max(a, b int) int {
-	if a > b {
-		return a
-	} else {
-		return b
-	}
-}
