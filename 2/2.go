@@ -4,24 +4,24 @@ package main
 
 import (
 	"fmt"
-	"os"
 	"../utils/fileutils"
 	"../utils/parsers"
 	"../utils/intutils"
+	"../utils/argparse"
 )
 
 func main() {
-	if len(os.Args) < 2 {
+	if argparse.ValidateLength(2) != nil {
 		fmt.Println("Checksum. Use: path\\to\\data(string) [valueSep=\\t(string)]")
 		return
 	}
 
-	valueSeparator := "\t"
-	if len(os.Args) > 2 {
-		valueSeparator = os.Args[3]
+	valueSeparator := argparse.ReadStringOrDefault(2, "\t")
+	path, err := argparse.ReadPath(1)
+	if err != nil {
+		fmt.Println("Invalid file")
+		return
 	}
-
-	path := os.Args[1]
 	input, err := fileutils.ReadAllLines(path)
 	if err != nil {
 		fmt.Println("Invalid input file.")

@@ -3,16 +3,16 @@ package parsers
 import (
 	"strings"
 	"strconv"
+	"../stringutils"
+	"../intutils"
 )
 
 func StringToNumbers(str string) []int {
-	result := make([]int, len(str))
-
-	for idx := 0; idx < len(str); idx++ {
-		result[idx] = int(str[idx] - '0')
-	}
-
-	return result
+	chars := stringutils.StringToChars(str)
+	byteNumbers := intutils.MapByte(chars, func (b byte) byte {
+		return b - '0'
+	})
+	return intutils.ByteToInt(byteNumbers)
 }
 
 func ConvertToMatrix(input []string, valueSeparator string) ([][]int, error) {

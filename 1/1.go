@@ -4,27 +4,18 @@ package main
 
 import (
 	"fmt"
-	"os"
-	"strconv"
+	"../utils/argparse"
 	"../utils/intutils"
 	"../utils/parsers"
 )
 
 func main() {
-	args := os.Args
-	if len(args) < 2 {
+	if argparse.ValidateLength(2) != nil {
 		fmt.Println("Robot captcha. Using with arguments: hash(string) [shiftStep(uint)]")
 		return
 	}
-	input := args[1]
-	shiftStep := 1
-	if len(args) > 2 {
-		if step, err := strconv.ParseInt(args[2], 10, 0); err != nil {
-			shiftStep = 1
-		} else {
-			shiftStep = int(step)
-		}
-	}
+	input, _ := argparse.ReadString(1)
+	shiftStep := argparse.ReadDecimalOrDefault(2, 1)
 
 	numbers := parsers.StringToNumbers(input)
 	nextNumbers := intutils.Shift(numbers, shiftStep)

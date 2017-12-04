@@ -8,6 +8,14 @@ func MapInt(arr []int, f func(int) int) []int {
 	return result
 }
 
+func MapByte(arr []byte, f func(byte) byte) []byte {
+	result := make([]byte, len(arr))
+	for idx, val := range arr {
+		result[idx] = val
+	}
+	return result
+}
+
 func Shift(arr []int, step int) []int {
 	arrLen := len(arr)
 	result := make([]int, arrLen)

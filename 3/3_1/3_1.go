@@ -5,19 +5,17 @@ package main
 import (
 	"fmt"
 	"math"
-	"os"
-	"strconv"
 	"../../utils/intutils"
+	"../../utils/argparse"
 )
 
 func main() {
-	args := os.Args
-	if len(args) < 2 {
+	if argparse.ValidateLength(2) != nil {
 		fmt.Println("Distance. Require n(int)")
 		return
 	}
 
-	n, err := strconv.ParseInt(args[1], 10, 0)
+	n, err := argparse.ReadDecimalInt(1)
 	if err != nil {
 		fmt.Println("Invalid argument.")
 		return

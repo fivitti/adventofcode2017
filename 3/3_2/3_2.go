@@ -5,9 +5,8 @@ package main
 import (
 	"errors"
 	"fmt"
-	"os"
-	"strconv"
 	"../../utils/intutils"
+	"../../utils/argparse"
 )
 
 const matrixSize = 10000
@@ -30,13 +29,13 @@ func set(x, y, value int) {
 }
 
 func main() {
-	args := os.Args
-	if len(args) < 2 {
+
+	if argparse.ValidateLength(2) != nil {
 		fmt.Println("Find first greater than. Require n(int)")
 		return
 	}
 
-	rawExpected, err := strconv.ParseInt(args[1], 10, 0)
+	rawExpected, err := argparse.ReadDecimalInt(1)
 	if err != nil {
 		fmt.Println("Invalid argument.")
 		return
@@ -81,6 +80,20 @@ func nextCoords(boxSize, x, y int) (int, int, error) {
 	return 0, 0, errors.New("Unsupported operation.")
 }
 
+func sumNeightBours(boxSize, x, y int) int {
+	halfBoxSize := boxSize / 2
+	neightbourValue := 0
+	for idxX := intutils.Max(x-1, -halfBoxSize); idxX <= intutils.Min(x+1, halfBoxSize); idxX++ {
+		for idxY := intutils.Max(y-1, -halfBoxSize); idxY <= intutils.Min(y+1, halfBoxSize); idxY++ {
+			if idxX == x && idxY == y {
+				continue
+			}
+			neightbourValue += get(idxX, idxY)
+		}
+	}
+	return  neightbourValue
+}
+
 func genMatrix(stopCond func(int) bool) (int, error) {
 	set(0, 0, 1)
 
@@ -90,17 +103,8 @@ func genMatrix(stopCond func(int) bool) (int, error) {
 
 	for boxSize < matrixSize {
 		halfBoxSize := boxSize / 2
-
 		for x >= -halfBoxSize && x <= halfBoxSize && y >= -halfBoxSize && y <= halfBoxSize {
-			neightbourValue := 0
-			for idxX := intutils.Max(x-1, -halfBoxSize); idxX <= intutils.Min(x+1, halfBoxSize); idxX++ {
-				for idxY := intutils.Max(y-1, -halfBoxSize); idxY <= intutils.Min(y+1, halfBoxSize); idxY++ {
-					if idxX == x && idxY == y {
-						continue
-					}
-					neightbourValue += get(idxX, idxY)
-				}
-			}
+			neightbourValue := sumNeightBours(boxSize, x, y)
 			set(x, y, neightbourValue)
 
 			if stopCond(neightbourValue) {
