@@ -15,3 +15,11 @@ func IntsToBytes(arr []int) []byte {
 	}
 	return result
 }
+
+func Clone(arr []int) []int {
+	result := make([]int, len(arr))
+	for idx, val := range arr {
+		result[idx] = val
+	}
+	return result
+}

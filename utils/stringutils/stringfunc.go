@@ -29,3 +29,11 @@ func MapListList(arr [][]string, f func ([]string) []string) [][]string {
 
 	return result
 }
+
+func MapAndReduceListList(arr [][]string, f func ([]string) string) []string {
+	result := make([]string, len(arr))
+	for idx, val := range arr {
+		result[idx] = f(val)
+	}
+	return result
+}

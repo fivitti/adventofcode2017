@@ -12,7 +12,19 @@ func StringToNumbers(str string) []int {
 	byteNumbers := intutils.MapByte(chars, func (b byte) byte {
 		return b - '0'
 	})
-	return intutils.ByteToInt(byteNumbers)
+	return intutils.BytesToInts(byteNumbers)
+}
+
+func StringsToNumbers(arr []string) ([]int, error) {
+	values := make([]int, len(arr))
+	for idxVal, rawVal := range arr {
+		val, err := strconv.ParseInt(rawVal, 10, 0)
+		if err != nil {
+			return nil, err
+		}
+		values[idxVal] = int(val)
+	}
+	return values, nil
 }
 
 func ConvertToMatrix(input []string, valueSeparator string) ([][]int, error) {
@@ -20,13 +32,9 @@ func ConvertToMatrix(input []string, valueSeparator string) ([][]int, error) {
 
 	for idxRow, row := range input {
 		rawValues := strings.Split(row, valueSeparator)
-		values := make([]int, len(rawValues))
-		for idxVal, rawVal := range rawValues {
-			val, err := strconv.ParseInt(rawVal, 10, 0)
-			if err != nil {
-				return make([][]int, 0), err
-			}
-			values[idxVal] = int(val)
+		values, err := StringsToNumbers(rawValues)
+		if err != nil {
+			return nil, err
 		}
 		result[idxRow] = values
 	}
