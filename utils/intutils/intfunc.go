@@ -90,3 +90,53 @@ func All(arr []int, f func(int) bool) bool {
 	}
 	return true
 }
+
+func Same(arr []int) bool {
+	if len(arr) == 0 {
+		return true
+	}
+	return All(arr, func(val int) bool {
+		return val == arr[0]
+	})
+}
+
+func Equals(arrs [][]int) bool {
+	for _, group := range Zip(arrs) {
+		if !Same(group) {
+			return false
+		}
+	}
+	return true
+}
+
+func IndexOfMaximum(arr []int) int {
+	maximumIdx := 0
+	maximum := MinInt
+
+	for idx, val := range arr {
+		if val > maximum {
+			maximum = val
+			maximumIdx = idx
+		}
+	}
+	return maximumIdx
+}
+
+func IndexOfListList(matrix [][]int, arr[]int) int {
+	for idx, matrixEntry := range matrix {
+		if Equals([][]int{matrixEntry, arr}) {
+			return idx
+		}
+	}
+	return -1
+}
+
+func CycleIterate(arr []int, startIdx int, f func (arr []int, idx int) bool) {
+	arrLen := len(arr)
+	for f(arr, startIdx) {
+		startIdx += 1
+		if startIdx == arrLen {
+			startIdx = 0
+		}
+	}
+}

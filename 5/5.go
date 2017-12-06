@@ -2,8 +2,6 @@ package main
 
 import (
 	"../utils/argparse"
-	"../utils/parsers"
-	"../utils/fileutils"
 	"../utils/intutils"
 	"fmt"
 )
@@ -14,20 +12,7 @@ func main() {
 		return
 	}
 
-	path, err := argparse.ReadPath(1)
-	if err != nil {
-		fmt.Printf("Invalid file: %s.", err.Error())
-		return
-	}
-
-	rawColumn, err := fileutils.ReadAllLines(path)
-	if err != nil {
-		fmt.Println("Invalid file.")
-		print(err)
-		return
-	}
-
-	input, err := parsers.StringsToNumbers(rawColumn)
+	input, err := argparse.ReadIntColumn(1)
 	if err != nil {
 		fmt.Println("Invalid file.")
 		print(err)

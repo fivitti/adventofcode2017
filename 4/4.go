@@ -9,7 +9,7 @@ import (
 )
 
 func main() {
-	path, err := argparse.ReadPath(1)
+	err := argparse.ValidateLength(2)
 	if err != nil {
 		fmt.Println("Day 4: High-Entropy Passphrases. Arguments: path/to/file(string) [separator](string)=\" \"",
 			"Invalid input file.")
@@ -18,7 +18,7 @@ func main() {
 
 	separator := argparse.ReadStringOrDefault(2, " ")
 
-	matrix, err := readFile(path, separator)
+	matrix, err := argparse.ReadStringMatrix(1, separator)
 	if err != nil {
 		fmt.Println("Invalid input file")
 		return
@@ -38,23 +38,6 @@ func main() {
 	linesWithoutDuplicates = len(matrix) - len(linesWithDuplicates)
 
 	fmt.Printf("Lines without anagram duplicates: %d.", linesWithoutDuplicates)
-}
-
-func readFile(path, sep string) ([][]string, error) {
-	lines, err := fileutils.ReadAllLines(path)
-	if err != nil {
-		return nil, err
-	}
-	return splitLines(lines, sep), nil
-}
-
-func splitLines(lines []string, sep string) [][]string {
-	matrix := make([][]string, len(lines))
-	for lineIdx, line := range lines {
-		splited := strings.Split(line, sep)
-		matrix[lineIdx] = splited
-	}
-	return matrix
 }
 
 func existDuplicates(entry []string) bool {

@@ -4,7 +4,6 @@ import (
 	"os"
 	"strconv"
 	"errors"
-	"../fileutils"
 	"fmt"
 )
 
@@ -56,16 +55,4 @@ func ReadStringOrDefault(position int, default_ string) string {
 		return default_
 	}
 	return value
-}
-
-func ReadPath(position int) (string, error) {
-	value, err := getValue(position)
-	if err != nil {
-		return "", err
-	}
-	err = fileutils.FileExists(value)
-	if err != nil {
-		return "", err
-	}
-	return value, nil
 }
