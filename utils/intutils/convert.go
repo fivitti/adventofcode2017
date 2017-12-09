@@ -1,5 +1,7 @@
 package intutils
 
+import "strconv"
+
 func BytesToInts(arr []byte) []int {
 	result := make([]int, len(arr))
 	for idx, val := range arr {
@@ -22,4 +24,12 @@ func Clone(arr []int) []int {
 		result[idx] = val
 	}
 	return result
+}
+
+func ParseInt(str string) (int, error) {
+	temp, err := strconv.ParseInt(str, 10, 0)
+	if err != nil {
+		return 0, err
+	}
+	return int(temp), err
 }

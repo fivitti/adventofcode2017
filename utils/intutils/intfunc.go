@@ -3,7 +3,7 @@ package intutils
 func MapInt(arr []int, f func(int) int) []int {
 	result := make([]int, len(arr))
 	for idx, val := range arr {
-		result[idx] = val
+		result[idx] = f(val)
 	}
 	return result
 }

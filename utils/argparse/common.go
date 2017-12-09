@@ -53,13 +53,22 @@ func ReadIntMatrix(position int, separator string) ([][]int, error) {
 	return matrix, nil
 }
 
-func ReadIntColumn(position int) ([]int, error) {
+func ReadStringColumn(position int) ([]string, error) {
 	path, err := ReadPath(1)
 	if err != nil {
 		return nil, err
 	}
 
 	lines, err := fileutils.ReadAllLines(path)
+	if err != nil {
+		return nil, err
+	}
+
+	return lines, nil
+}
+
+func ReadIntColumn(position int) ([]int, error) {
+	lines, err := ReadStringColumn(position)
 	if err != nil {
 		return nil, err
 	}
@@ -67,22 +76,30 @@ func ReadIntColumn(position int) ([]int, error) {
 	return parsers.StringsToNumbers(lines)
 }
 
-func ReadIntRow(position int, separator string) ([]int, error) {
+func ReadStringRow(position int) (string, error) {
 	path, err := ReadPath(1)
 	if err != nil {
-		return nil, err
+		return "", err
 	}
 
 	lines, err := fileutils.ReadAllLines(path)
 	if err != nil {
-		return nil, err
+		return "", err
 	}
 
 	if len(lines) == 0 {
-		return make([]int, 0), nil
+		return "", nil
 	}
 
-	line := lines[0]
+	return lines[0], nil
+}
+
+func ReadIntRow(position int, separator string) ([]int, error) {
+	line, err := ReadStringRow(position)
+	if err != nil {
+		return nil, err
+	}
+
 	rawValues := strings.Split(line, separator)
 	return parsers.StringsToNumbers(rawValues)
 }

@@ -2,9 +2,9 @@ package argparse
 
 import (
 	"os"
-	"strconv"
 	"errors"
 	"fmt"
+	"../intutils"
 )
 
 func ValidateLength(expected int) error {
@@ -26,11 +26,7 @@ func ReadDecimalInt(position int) (int, error) {
 	if err != nil {
 		return 0, err
 	}
-	parsed, err := strconv.ParseInt(value, 10, 0)
-	if err != nil {
-		return 0, err
-	}
-	return int(parsed), nil
+	return intutils.ParseInt(value)
 }
 
 func ReadDecimalOrDefault(position int, default_ int) int {
