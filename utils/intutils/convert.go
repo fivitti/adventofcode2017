@@ -1,6 +1,10 @@
 package intutils
 
-import "strconv"
+import (
+	"strconv"
+	"strings"
+	"fmt"
+)
 
 func BytesToInts(arr []byte) []int {
 	result := make([]int, len(arr))
@@ -32,4 +36,14 @@ func ParseInt(str string) (int, error) {
 		return 0, err
 	}
 	return int(temp), err
+}
+
+func BytesToHexes(bytes []byte, separator string) string {
+	result := make([]string, len(bytes))
+
+	for idx, val := range bytes {
+		result[idx] = fmt.Sprintf("%02x", val)
+	}
+
+	return strings.Join(result, separator)
 }

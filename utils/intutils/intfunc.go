@@ -140,3 +140,37 @@ func CycleIterate(arr []int, startIdx int, f func (arr []int, idx int) bool) {
 		}
 	}
 }
+
+func Reverse(arr []int) {
+	for left, right := 0, len(arr) - 1; left < right; left, right = left + 1, right - 1 {
+		arr[left], arr[right] = arr[right], arr[left]
+	}
+}
+
+func Range(start int, end int, step int) []int {
+	result := make([]int, 0)
+	for val := start; val < end; val += step {
+		result = append(result, val)
+	}
+	return result
+}
+
+func Group(arr []int, groupSize int) [][]int {
+	result := make([][]int, 0)
+	var currentGroup []int
+
+	for idx, val := range arr {
+		// Begin next group
+		if idx % groupSize == 0 {
+			if currentGroup != nil {
+				result = append(result, currentGroup)
+			}
+			currentGroup = make([]int, 0)
+		}
+
+		currentGroup = append(currentGroup, val)
+	}
+
+	result = append(result, currentGroup)
+	return result
+}
