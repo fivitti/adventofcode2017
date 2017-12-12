@@ -109,6 +109,19 @@ func Equals(arrs [][]int) bool {
 	return true
 }
 
+func IndexOf(arr []int, item int) int {
+	for idx, val := range arr {
+		if val == item {
+			return idx
+		}
+	}
+	return -1
+}
+
+func Contains(arr []int, item int) bool {
+	return IndexOf(arr, item) != -1
+}
+
 func IndexOfMaximum(arr []int) int {
 	maximumIdx := 0
 	maximum := MinInt
@@ -173,4 +186,16 @@ func Group(arr []int, groupSize int) [][]int {
 
 	result = append(result, currentGroup)
 	return result
+}
+
+func Concat(first []int, second []int) []int {
+	return append(first, second...)
+}
+
+func Delete(arr []int, idx int) []int {
+	return append(arr[:idx], arr[idx+1:]...)
+}
+
+func DeleteFromListList(arr [][]int, idx int) [][]int {
+	return append(arr[:idx], arr[idx+1:]...)
 }
