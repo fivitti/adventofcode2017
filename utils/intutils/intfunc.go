@@ -71,12 +71,10 @@ func MapAndReduceListList(arrs [][]int, f func([]int) int) []int {
 func Reduce(arr []int, reducer func(int, int) int) int {
 	if len(arr) == 0 {
 		return 0
-	} else if len(arr) == 1 {
-		return arr[0]
 	}
 
-	accumulator := arr[0]
-	for idx := 1; idx < len(arr); idx++ {
+	accumulator := 0
+	for idx := 0; idx < len(arr); idx++ {
 		accumulator = reducer(accumulator, arr[idx])
 	}
 	return accumulator
