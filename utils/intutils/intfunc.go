@@ -133,6 +133,14 @@ func IndexOfMaximum(arr []int) int {
 	return maximumIdx
 }
 
+func MaximumList(arr []int) int {
+	return arr[IndexOfMaximum(arr)]
+}
+
+func MaximumListList(matrix [][]int) int {
+	return Reduce(MapAndReduceListList(matrix, MaximumList), Max)
+}
+
 func IndexOfListList(matrix [][]int, arr[]int) int {
 	for idx, matrixEntry := range matrix {
 		if Equals([][]int{matrixEntry, arr}) {

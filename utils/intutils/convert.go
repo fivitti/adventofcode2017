@@ -6,6 +6,9 @@ import (
 	"fmt"
 )
 
+const BITS_IN_BYTE = 8
+const MOST_SIGNIFICANT_BIT_IN_BYTE_VALUE = 128
+
 func BytesToInts(arr []byte) []int {
 	result := make([]int, len(arr))
 	for idx, val := range arr {
@@ -46,4 +49,42 @@ func BytesToHexes(bytes []byte, separator string) string {
 	}
 
 	return strings.Join(result, separator)
+}
+
+func BytesToBits(bytes []byte) []bool {
+	result := make([]bool, 0)
+
+	for _, byte_ := range bytes {
+		bits := ByteToBits(byte_)
+		result = append(result, bits...)
+	}
+
+	return result
+}
+
+func ByteToBits(byte_ byte) []bool {
+	result := make([]bool, BITS_IN_BYTE)
+
+	for bit := uint(0); bit < BITS_IN_BYTE; bit++ {
+		result[bit] = byte_ & (MOST_SIGNIFICANT_BIT_IN_BYTE_VALUE >> bit) != 0
+	}
+
+	return result
+}
+
+func BitsToString(bits []bool, group int) string {
+	const SPACE = ' '
+	chars := make([]byte, 0)
+	for idx, bit := range bits {
+		if idx != 0 && group > 1 && idx % group == 0 {
+			chars = append(chars, SPACE)
+		}
+		if bit {
+			chars = append(chars, '1')
+		} else {
+			chars = append(chars, '0')
+		}
+	}
+
+	return string(chars)
 }
