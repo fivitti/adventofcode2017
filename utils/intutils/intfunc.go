@@ -160,7 +160,7 @@ func CycleIterate(arr []int, startIdx int, f func (arr []int, idx int) bool) {
 	}
 }
 
-func Reverse(arr []int) {
+func ReverseInPlace(arr []int) {
 	for left, right := 0, len(arr) - 1; left < right; left, right = left + 1, right - 1 {
 		arr[left], arr[right] = arr[right], arr[left]
 	}
@@ -204,4 +204,22 @@ func Delete(arr []int, idx int) []int {
 
 func DeleteFromListList(arr [][]int, idx int) [][]int {
 	return append(arr[:idx], arr[idx+1:]...)
+}
+
+func Reverse(arr []int) []int {
+	result := make([]int, len(arr))
+	arrLen := len(arr)
+	for idx, val := range arr {
+		result[arrLen - idx - 1] = val
+	}
+	return result
+}
+
+func ReverseBools(arr []bool) []bool {
+	result := make([]bool, len(arr))
+	arrLen := len(arr)
+	for idx, val := range arr {
+		result[arrLen - idx - 1] = val
+	}
+	return result
 }

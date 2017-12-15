@@ -72,6 +72,21 @@ func ByteToBits(byte_ byte) []bool {
 	return result
 }
 
+func IntToBits(num int) []bool {
+	result := make([]bool, 0)
+
+	for num > 0 {
+		if num & 1 == 1 {
+			result = append(result, true)
+		} else {
+			result = append(result, false)
+		}
+		num = num >> 1
+	}
+
+	return ReverseBools(result)
+}
+
 func BitsToString(bits []bool, group int) string {
 	const SPACE = ' '
 	chars := make([]byte, 0)
