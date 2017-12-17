@@ -160,6 +160,16 @@ func CycleIterate(arr []int, startIdx int, f func (arr []int, idx int) bool) {
 	}
 }
 
+func CycleIterateByte(arr []byte, startIdx int, f func (arr []byte, idx int) bool) {
+	arrLen := len(arr)
+	for f(arr, startIdx) {
+		startIdx += 1
+		if startIdx == arrLen {
+			startIdx = 0
+		}
+	}
+}
+
 func ReverseInPlace(arr []int) {
 	for left, right := 0, len(arr) - 1; left < right; left, right = left + 1, right - 1 {
 		arr[left], arr[right] = arr[right], arr[left]
@@ -222,4 +232,11 @@ func ReverseBools(arr []bool) []bool {
 		result[arrLen - idx - 1] = val
 	}
 	return result
+}
+
+func Insert(arr []int, position int, value int) []int {
+	arr = append(arr, 0)
+	copy(arr[position+1:], arr[position:])
+	arr[position] = value
+	return arr
 }
