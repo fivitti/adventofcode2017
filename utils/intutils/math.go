@@ -33,3 +33,7 @@ func Max(a, b int) int {
 		return b
 	}
 }
+
+func Sqrt(x int) int {
+	return int(math.Sqrt(float64(x)))
+}

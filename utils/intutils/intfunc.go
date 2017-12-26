@@ -1,5 +1,7 @@
 package intutils
 
+import "math"
+
 func MapInt(arr []int, f func(int) int) []int {
 	result := make([]int, len(arr))
 	for idx, val := range arr {
@@ -176,6 +178,12 @@ func ReverseInPlace(arr []int) {
 	}
 }
 
+func ReverseBytesInPlace(arr []byte) {
+	for left, right := 0, len(arr) - 1; left < right; left, right = left + 1, right - 1 {
+		arr[left], arr[right] = arr[right], arr[left]
+	}
+}
+
 func Range(start int, end int, step int) []int {
 	result := make([]int, 0)
 	for val := start; val < end; val += step {
@@ -239,4 +247,21 @@ func Insert(arr []int, position int, value int) []int {
 	copy(arr[position+1:], arr[position:])
 	arr[position] = value
 	return arr
+}
+
+func Filter(arr []int, condition func (int) bool) []int {
+	result := make([]int, 0)
+	for _, val := range arr {
+		if condition(val) {
+			result = append(result, val)
+		}
+	}
+	return result
+}
+
+func Round(a float64) float64 {
+	if a < 0 {
+		return math.Ceil(a - 0.5)
+	}
+	return math.Floor(a + 0.5)
 }
